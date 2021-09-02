@@ -235,9 +235,10 @@ return [
             'text' => 'Companies',
             'url'  => 'admin/companies',
         ],
-
-
-
+        [
+            'text' => 'Employees',
+            'url'  => 'admin/employees',
+        ],
 
     ],
 

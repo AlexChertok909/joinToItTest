@@ -66,21 +66,21 @@ class CompanyController extends Controller
             return redirect()->route('companies.create')->with('error', 'Company not create');
         }
 
-        return redirect()->route('companies.index')->with('message', 'Company update');
+        return redirect()->route('companies.index')->with('message', 'Company created');
     }
 
     /**
      * Display the specified resource.
      *
      * @param int $id
-     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function show($id)
+    public function show(int $id)
     {
         $company = Company::find($id);
 
         if (empty($company))
-            return redirect()->route('companies.index', $id)->with('error', 'Company not found');
+            return redirect()->route('companies.index')->with('error', 'Company not found');
 
         return view('admin.companies.read', ['data' => ['company' => $company]]);
 
@@ -89,10 +89,10 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $company = Company::find($id);
 
@@ -102,8 +102,9 @@ class CompanyController extends Controller
         return view('admin.companies.edit-add', ['data' => ['company' => $company, 'type' => 'Edit']]);
     }
 
-
     /**
+     * Update the specified resource in storage.
+     *
      * @param StoreOrUpdateRequest $request
      * @param int $id
      */
@@ -136,7 +137,7 @@ class CompanyController extends Controller
             return redirect()->route('companies.edit', $id)->with('error', 'Company not update');
         }
 
-        return redirect()->route('companies.index')->with('message', 'Company update');
+        return redirect()->route('companies.index')->with('message', 'Company updated');
     }
 
     /**
@@ -150,17 +151,17 @@ class CompanyController extends Controller
         $company = Company::find($id);
 
         if (empty($company))
-            return redirect()->route('companies.index', $id)->with('error', 'Company not found');
+            return redirect()->route('companies.index')->with('error', 'Company not found');
 
         try {
 
             $this->commonHelper->deleteFile($company->logo);
             $company->delete();
-            return redirect()->route('companies.index', $id)->with('message', 'Company not destroy');
+            return redirect()->route('companies.index')->with('message', 'Company not destroy');
 
         } catch (\Throwable $throwable) {
             Log::error($throwable->getMessage());
-            return redirect()->route('companies.index', $id)->with('error', 'Company not destroy');
+            return redirect()->route('companies.index')->with('error', 'Company not destroy');
         }
 
     }
