@@ -1,9 +1,9 @@
 
-@section('css')
+@push('css')
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-@stop
+@endpush
 
-@section('js')
+@push('js')
     <!-- Toastr -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
@@ -46,4 +46,4 @@
         @endif
 
     </script>
-@stop
+@endpush
