@@ -16,6 +16,7 @@ class EmployeeRepository
     {
         return Employee::join('companies as c', 'c.id', '=', 'employees.company_id')
             ->select('employees.id', 'employees.first_name', 'employees.last_name', 'c.name as company_name', 'employees.email', 'employees.phone')
+            ->orderBy('employees.id', 'ASC')
             ->paginate(10);
     }
 

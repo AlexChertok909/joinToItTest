@@ -28,11 +28,11 @@
             @endphp
             @if(!empty($file) && !empty($file[0]))
                 <div>
-                    <img src="{{url($file[0]->download_link) ?: '' }}"/>
+                    <img src="{{url('storage/' . $file[0]->download_link) ?: '' }}"/>
                 </div>
                 <div data-field-name="logo">
                     <a class="fileType" target="_blank"
-                       href="{{url($file[0]->download_link) ?: '' }}"
+                       href="{{url('storage/' .$file[0]->download_link) ?: '' }}"
                        data-file-name="{{ $file[0]->original_name }}" data-id="{{ $data['company']->id }}">
                         {{ $file[0]->original_name ?: '' }}
                     </a>
