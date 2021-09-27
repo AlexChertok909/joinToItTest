@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
+
 
 namespace App\Repositories;
-
-
 
 use App\Models\Company;
 use App\Models\Employee;
@@ -28,6 +28,10 @@ class EmployeeRepository
         return  Company::orderBy('name', 'ASC')->get(['id', 'name']);
     }
 
+    /**
+     * @param int $id
+     * @return mixed
+     */
     public function getEmployee(int $id)
     {
         return Employee::join('companies as c', 'c.id', '=', 'employees.company_id')
