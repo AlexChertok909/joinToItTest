@@ -7,9 +7,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\CommonHelper;
 use App\Http\Requests\Admin\Companies\StoreOrUpdateRequest;
+use App\Mail\NewCompany;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class CompanyController extends Controller
 {
@@ -54,7 +56,7 @@ class CompanyController extends Controller
     {
         try {
 
-            Company::create([
+            $company = Company::create([
                 'name' => $request->company_name,
                 'email' => !empty($request->company_email) ? $request->company_email : '',
                 'website' => !empty($request->company_website) ? $request->company_website : '',
@@ -66,6 +68,12 @@ class CompanyController extends Controller
         } catch (\Throwable $throwable) {
             Log::error($throwable->getMessage());
             return redirect()->route('companies.create')->with('error', 'Company not create');
+        }
+
+        try {
+            Mail::to('joinToItTest@mail.com')->send(new NewCompany($company));
+        } catch (\Throwable $throwable) {
+            Log::error('email error ' . $throwable->getMessage());
         }
 
         return redirect()->route('companies.index')->with('message', 'Company created');
